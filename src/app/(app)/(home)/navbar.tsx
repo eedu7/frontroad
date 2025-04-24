@@ -1,6 +1,6 @@
 "use client";
 
-import { NavbarSidebar } from "@/app/(home)/navbar-sidebar";
+import { NavbarSidebar } from "@/app/(app)/(home)/navbar-sidebar";
 import { Button } from "@/components/ui/button";
 
 import { cn } from "@/lib/utils";
