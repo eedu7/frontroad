@@ -1,7 +1,13 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
+
 import { cn } from "@/lib/utils";
+
 import { Poppins } from "next/font/google";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+
 import React from "react";
 
 const poppins = Poppins({
@@ -10,6 +16,8 @@ const poppins = Poppins({
 });
 
 export const Navbar = () => {
+    const pathname = usePathname();
+
     return (
         <nav className="flex h-20 justify-between border-b bg-white font-medium">
             <Link
@@ -23,6 +31,7 @@ export const Navbar = () => {
                     <NavbarItem
                         key={item.href}
                         {...item}
+                        isActive={pathname === item.href}
                     />
                 ))}
             </div>
