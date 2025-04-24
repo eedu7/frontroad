@@ -32,12 +32,27 @@ export const NavbarSidebar = ({ items, open, onOpenChange }: Props) => {
                 <ScrollArea className="flex h-full flex-col overflow-y-auto pb-2">
                     {items.map((item) => (
                         <Link
+                            key={item.href}
                             href={item.href}
                             className="flex w-full items-center p-4 text-left text-base font-medium hover:bg-black hover:text-white"
                         >
                             {item.children}
                         </Link>
                     ))}
+                    <div className="border-t">
+                        <Link
+                            className="flex w-full items-center p-4 text-left text-base font-medium hover:bg-black hover:text-white"
+                            href={"/sign-in"}
+                        >
+                            Log in
+                        </Link>
+                        <Link
+                            className="flex w-full items-center p-4 text-left text-base font-medium hover:bg-black hover:text-white"
+                            href={"/sign-up"}
+                        >
+                            Start selling
+                        </Link>
+                    </div>
                 </ScrollArea>
             </SheetContent>
         </Sheet>
