@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Poppins } from "next/font/google";
 import Link from "next/link";
@@ -18,5 +19,42 @@ export const Navbar = () => {
                 <span className={cn("text-5xl font-semibold", poppins.className)}>frontroad</span>
             </Link>
         </nav>
+    );
+};
+
+interface NavbarItemProps {
+    href: string;
+    children: React.ReactNode;
+    isActive?: boolean;
+}
+
+const navbarItems: NavbarItemProps[] = [
+    {
+        href: "/",
+        children: "Home",
+    },
+    {
+        href: "/about",
+        children: "About",
+    },
+    {
+        href: "/features",
+        children: "Features",
+    },
+    {
+        href: "/pricing",
+        children: "Pricing",
+    },
+    {
+        href: "/contact",
+        children: "Contact",
+    },
+];
+
+const NavbarItem = ({ href, children, isActive }: NavbarItemProps) => {
+    return (
+        <Button asChild>
+            <Link href="#"></Link>
+        </Button>
     );
 };
