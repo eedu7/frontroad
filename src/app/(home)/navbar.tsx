@@ -37,12 +37,16 @@ export const Navbar = () => {
             </div>
             <div className="hidden lg:flex">
                 <Button
+                    asChild
                     variant="secondary"
                     className="h-full rounded-none border-t-0 border-r-0 border-b-0 border-l bg-white px-12 text-lg transition-colors hover:bg-pink-400"
                 >
                     <Link href={"/sign-in"}>Log in</Link>
                 </Button>
-                <Button className="h-full rounded-none border-t-0 border-r-0 border-b-0 border-l bg-black px-12 text-lg text-white transition-colors hover:bg-pink-400 hover:text-black">
+                <Button
+                    asChild
+                    className="h-full rounded-none border-t-0 border-r-0 border-b-0 border-l bg-black px-12 text-lg text-white transition-colors hover:bg-pink-400 hover:text-black"
+                >
                     <Link href={"/sign-up"}>Start selling</Link>
                 </Button>
             </div>
