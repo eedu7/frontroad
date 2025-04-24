@@ -18,6 +18,14 @@ export const Navbar = () => {
             >
                 <span className={cn("text-5xl font-semibold", poppins.className)}>frontroad</span>
             </Link>
+            <div className="hidden items-center gap-4 lg:flex">
+                {navbarItems.map((item) => (
+                    <NavbarItem
+                        key={item.href}
+                        {...item}
+                    />
+                ))}
+            </div>
         </nav>
     );
 };
@@ -54,7 +62,7 @@ const navbarItems: NavbarItemProps[] = [
 const NavbarItem = ({ href, children, isActive }: NavbarItemProps) => {
     return (
         <Button asChild>
-            <Link href="#"></Link>
+            <Link href={href}>{children}</Link>
         </Button>
     );
 };
