@@ -4,6 +4,7 @@ import { NavbarSidebar } from "@/app/(home)/navbar-sidebar";
 import { Button } from "@/components/ui/button";
 
 import { cn } from "@/lib/utils";
+import { MenuIcon } from "lucide-react";
 
 import { Poppins } from "next/font/google";
 import Link from "next/link";
@@ -57,6 +58,15 @@ export const Navbar = () => {
                         className="h-full rounded-none border-t-0 border-r-0 border-b-0 border-l bg-black px-12 text-lg text-white transition-colors hover:bg-pink-400 hover:text-black"
                     >
                         <Link href={"/sign-up"}>Start selling</Link>
+                    </Button>
+                </div>
+                <div className="flex items-center justify-center lg:hidden">
+                    <Button
+                        variant="ghost"
+                        className="size-12 border-transparent bg-white"
+                        onClick={() => setIsSidebarOpen(isSidebarOpen)}
+                    >
+                        <MenuIcon />
                     </Button>
                 </div>
             </nav>
