@@ -61,7 +61,15 @@ const navbarItems: NavbarItemProps[] = [
 
 const NavbarItem = ({ href, children, isActive }: NavbarItemProps) => {
     return (
-        <Button asChild>
+        <Button
+            asChild
+            variant="outline"
+            className={cn(
+                "hover:border-primary rounded-full border-transparent bg-transparent hover:bg-transparent",
+                "px-3.5 text-lg",
+                isActive && "bg-black text-white hover:bg-black hover:text-white",
+            )}
+        >
             <Link href={href}>{children}</Link>
         </Button>
     );
