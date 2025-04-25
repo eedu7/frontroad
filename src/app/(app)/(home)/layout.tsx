@@ -28,13 +28,14 @@ export default async function HomeLayout({ children }: { children: React.ReactNo
         subcategories: (doc.subcategories?.docs ?? []).map((doc) => ({
             // Because of "depth: 1", we are confident "doc" will be of type "Categpry"
             ...(doc as Category),
+            subcategories: undefined,
         })),
     }));
 
     return (
         <div className="flex min-h-screen flex-col">
             <Navbar />
-            <SearchFilters data={data} />
+            <SearchFilters data={formattedData} />
             <div className="flex-1 bg-[#F4F4F0]">{children}</div>
             <Footer />
         </div>
