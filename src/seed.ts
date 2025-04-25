@@ -137,6 +137,7 @@ const categories = [
     },
 ];
 
+// TODO: I run this using bun
 const seed = async () => {
     const payload = await getPayload({ config });
 
@@ -164,6 +165,11 @@ const seed = async () => {
     }
 };
 
-await seed();
-
-process.exit(0);
+try {
+    console.log("Seeding completed successfull");
+    await seed();
+    process.exit(0);
+} catch (error) {
+    console.error("Error during seeding:", error);
+    process.exit(1);
+}
