@@ -1,5 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { SearchIcon } from "lucide-react";
+
 import React from "react";
 
 interface Props {
@@ -16,6 +17,8 @@ export const SearchInput = ({ disabled }: Props) => {
                     placeholder="Search products"
                     disabled={disabled}
                 />
+                {/* TODO: Add categories view all button*/}
+                {/* TODO: Add library button*/}
             </div>
         </div>
     );
