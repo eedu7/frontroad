@@ -1,6 +1,7 @@
 import { Footer } from "@/app/(app)/(home)/footer";
 import { Navbar } from "@/app/(app)/(home)/navbar";
 import { SearchFilters } from "@/app/(app)/(home)/search-filters";
+import { CustomCategory } from "@/app/(app)/(home)/types";
 import { Category } from "@/payload-types";
 
 import configPromise from "@payload-config";
@@ -21,9 +22,10 @@ export default async function HomeLayout({ children }: { children: React.ReactNo
                 exists: false,
             },
         },
+        sort: "name",
     });
 
-    const formattedData = data.docs.map((doc) => ({
+    const formattedData: CustomCategory[] = data.docs.map((doc) => ({
         ...doc,
         subcategories: (doc.subcategories?.docs ?? []).map((doc) => ({
             // Because of "depth: 1", we are confident "doc" will be of type "Categpry"

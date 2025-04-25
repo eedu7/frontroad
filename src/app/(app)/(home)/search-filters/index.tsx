@@ -1,10 +1,11 @@
 import { Categories } from "@/app/(app)/(home)/search-filters/categories";
 import { SearchInput } from "@/app/(app)/(home)/search-filters/search-input";
+import { CustomCategory } from "@/app/(app)/(home)/types";
 
 import React from "react";
 
 interface Props {
-    data: any;
+    data: CustomCategory[];
 }
 
 export const SearchFilters = ({ data }: Props) => {

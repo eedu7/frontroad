@@ -2,15 +2,15 @@
 
 import { SubcategoryMenu } from "@/app/(app)/(home)/search-filters/subcategory-menu";
 import { useDropdownPosition } from "@/app/(app)/(home)/search-filters/use-dropdown-position";
+import { CustomCategory } from "@/app/(app)/(home)/types";
 import { Button } from "@/components/ui/button";
 
 import { cn } from "@/lib/utils";
-import { Category } from "@/payload-types";
 
 import React from "react";
 
 interface Props {
-    category: Category;
+    category: CustomCategory[];
     isActive?: boolean;
     isNavigationHovered?: boolean;
 }
@@ -46,7 +46,7 @@ export const CategoryDropdown = ({ category, isActive, isNavigationHovered }: Pr
                     className={cn(
                         "h-11 rounded-full border-transparent bg-transparent px-4 hover:bg-white",
                         "hover:border-primary text-black",
-                        isActive && !isNavigationHovered && "border-primary bg-white",
+                        isActive && !isNavigationHovered && "border-primary border bg-white",
                         isOpen &&
                             "border-primary bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]" +
                                 " -translate-x-[4px] -translate-y-[4px]",
