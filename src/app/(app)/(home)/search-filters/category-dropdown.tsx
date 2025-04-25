@@ -6,6 +6,7 @@ import { CustomCategory } from "@/app/(app)/(home)/types";
 import { Button } from "@/components/ui/button";
 
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 import React from "react";
 
@@ -33,12 +34,19 @@ export const CategoryDropdown = ({ category, isActive, isNavigationHovered }: Pr
 
     const dropdownPosition = getDropdownPosition();
 
+    const toggleDropdown = () => {
+        if (category.subcategories?.docs.length) {
+            setIsOpen(!isOpen);
+        }
+    };
+
     return (
         <div
             className="relative"
             ref={dropdownRef}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
+            onClick={toggleDropdown}
         >
             <div className="relative">
                 <Button
@@ -52,7 +60,7 @@ export const CategoryDropdown = ({ category, isActive, isNavigationHovered }: Pr
                                 " -translate-x-[4px] -translate-y-[4px]",
                     )}
                 >
-                    {category.name}
+                    <Link href={`/${category.slug === "all" ? "" : category.slug}`}>{category.name}</Link>
                 </Button>
                 {category.subcategories && category.subcategories.length > 0 && (
                     <div
