@@ -47,6 +47,7 @@ export const CategoryDropdown = ({ category, isActive, isNavigationHovered }: Pr
                         "h-11 rounded-full border-transparent bg-transparent px-4 hover:bg-white",
                         "hover:border-primary text-black",
                         isActive && !isNavigationHovered && "border-primary bg-white",
+                        isOpen && "border-primary bg-white",
                     )}
                 >
                     {category.name}
