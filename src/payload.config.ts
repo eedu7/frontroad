@@ -1,5 +1,4 @@
 // storage-adapter-import-placeholder
-import { Categories } from "@/collections/Categories";
 import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import { payloadCloudPlugin } from "@payloadcms/payload-cloud";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
@@ -8,6 +7,7 @@ import { buildConfig } from "payload";
 import sharp from "sharp";
 import { fileURLToPath } from "url";
 
+import { Categories } from "./collections/Categories";
 import { Media } from "./collections/Media";
 import { Users } from "./collections/Users";
 
