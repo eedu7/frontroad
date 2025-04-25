@@ -1,5 +1,6 @@
 "use client";
 
+import { SubcategoryMenu } from "@/app/(app)/(home)/search-filters/subcategory-menu";
 import { useDropdownPosition } from "@/app/(app)/(home)/search-filters/use-dropdown-position";
 import { Button } from "@/components/ui/button";
 
