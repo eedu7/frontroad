@@ -1,6 +1,7 @@
 "use client";
 
 import { DEFAULT_BG_COLOR } from "@/modules/home/constants";
+import { BreadcrumbNavigation } from "@/modules/home/ui/components/search-filters/breadcrumb-navigation";
 import { Categories } from "@/modules/home/ui/components/search-filters/categories";
 import { SearchInput } from "@/modules/home/ui/components/search-filters/search-input";
 import { useTRPC } from "@/trpc/client";
@@ -39,6 +40,11 @@ export const SearchFilters = () => {
             <div className="hidden lg:block">
                 <Categories data={data} />
             </div>
+            <BreadcrumbNavigation
+                activeCategory={activeCategory}
+                activeCategoryName={activeCategoryName}
+                activeSubcategoryName={activeSubcategoryName}
+            />
         </div>
     );
 };
