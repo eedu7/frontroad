@@ -1,19 +1,22 @@
 import { CustomCategory } from "@/app/(app)/(home)/types";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { useTRPC } from "@/trpc/client";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import React from "react";
 
 interface Props {
-    data: CustomCategory[]; // TODO: Remove this later
     open: boolean;
     onOpenChange: (open: boolean) => void;
 }
 
-export const CategoriesSidebar = ({ data, open, onOpenChange }: Props) => {
+export const CategoriesSidebar = ({ open, onOpenChange }: Props) => {
     const router = useRouter();
+    const trpc = useTRPC();
+    const { data } = useSuspenseQuery(trpc.categories.getMany.queryOptions());
 
     const [parentCategories, setParentCategories] = React.useState<CustomCategory[] | null>(null);
     const [selectedCategory, setSelectedCategory] = React.useState<CustomCategory | null>(null);

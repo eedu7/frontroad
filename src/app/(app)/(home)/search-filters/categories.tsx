@@ -61,7 +61,6 @@ export const Categories = ({ data }: Props) => {
             {/* Categories Sidebar */}
 
             <CategoriesSidebar
-                data={data}
                 open={isSidebarOpen}
                 onOpenChange={setIsSidebarOpen}
             />
