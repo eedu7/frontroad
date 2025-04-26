@@ -37,7 +37,8 @@ export const authRouter = createTRPCRouter({
             data: {
                 email: input.email,
                 username: input.username,
-                password: input.password, // PayloadJs automatically handles this
+                password: input.password, // PayloadJs automatically
+                // handles this
             },
         });
 
@@ -56,13 +57,13 @@ export const authRouter = createTRPCRouter({
             });
         }
 
-        console.log("Creating up cookies");
+        const cookies = await getCookies();
+
         cookies.set({
             name: AUTH_COOKIE,
             value: data.token,
             httpOnly: true,
-            path: "/",
-            // TODO: Ensure cross-domain cookie sharing
+            path: "/", // TODO: Ensure cross-domain cookie sharing
         });
     }),
     login: baseProcedure
@@ -94,8 +95,7 @@ export const authRouter = createTRPCRouter({
                 name: AUTH_COOKIE,
                 value: data.token,
                 httpOnly: true,
-                path: "/",
-                // TODO: Ensure cross-domain cookie sharing
+                path: "/", // TODO: Ensure cross-domain cookie sharing
             });
 
             return data;

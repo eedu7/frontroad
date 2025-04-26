@@ -10,6 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { Poppins } from "next/font/google";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -21,11 +22,16 @@ const poppins = Poppins({
 });
 
 export const SignUpView = () => {
+    const router = useRouter();
+
     const trpc = useTRPC();
     const register = useMutation(
         trpc.auth.register.mutationOptions({
             onError: (error) => {
                 toast.error(error.message);
+            },
+            onSuccess: (data) => {
+                router.push("/");
             },
         }),
     );
