@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 
 import React from "react";
 
-export default function SignUpPage() {
+export default async function SignUpPage() {
     const session = await caller.auth.session();
 
     if (session.user) {
