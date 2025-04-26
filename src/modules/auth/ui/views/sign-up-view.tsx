@@ -30,7 +30,7 @@ export const SignUpView = () => {
             onError: (error) => {
                 toast.error(error.message);
             },
-            onSuccess: (data) => {
+            onSuccess: () => {
                 router.push("/");
             },
         }),

@@ -14,3 +14,8 @@ export const registerSchema = z.object({
         )
         .refine((val) => !val.includes("--"), "Username cannot contain consecutive hypens"),
 });
+
+export const loginSchema = z.object({
+    email: z.string().email(),
+    password: z.string(),
+});
