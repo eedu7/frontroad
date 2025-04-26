@@ -2,15 +2,15 @@
 
 import { CategoriesSidebar } from "@/app/(app)/(home)/search-filters/categories-sidebar";
 import { CategoryDropdown } from "@/app/(app)/(home)/search-filters/category-dropdown";
-import { CustomCategory } from "@/app/(app)/(home)/types";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { CategoriesGetManyOutput } from "@/modules/categories/types";
 
 import { ListFilterIcon } from "lucide-react";
 import React from "react";
 
 interface Props {
-    data: CustomCategory[];
+    data: CategoriesGetManyOutput;
 }
 
 export const Categories = ({ data }: Props) => {
@@ -61,7 +61,6 @@ export const Categories = ({ data }: Props) => {
             {/* Categories Sidebar */}
 
             <CategoriesSidebar
-                data={data}
                 open={isSidebarOpen}
                 onOpenChange={setIsSidebarOpen}
             />

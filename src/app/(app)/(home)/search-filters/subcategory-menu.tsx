@@ -1,10 +1,11 @@
 import { cn } from "@/lib/utils";
+import { CategoriesGetManyOutputSingle } from "@/modules/categories/types";
 import { Category } from "@/payload-types";
 import Link from "next/link";
 import React from "react";
 
 interface Props {
-    category: Category;
+    category: CategoriesGetManyOutputSingle;
     isOpen: boolean;
     position: { left: number; top: number };
 }
