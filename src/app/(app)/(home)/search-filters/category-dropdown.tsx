@@ -2,16 +2,16 @@
 
 import { SubcategoryMenu } from "@/app/(app)/(home)/search-filters/subcategory-menu";
 import { useDropdownPosition } from "@/app/(app)/(home)/search-filters/use-dropdown-position";
-import { CustomCategory } from "@/app/(app)/(home)/types";
 import { Button } from "@/components/ui/button";
 
 import { cn } from "@/lib/utils";
+import { CategoriesGetManyOutputSingle } from "@/modules/categories/types";
 import Link from "next/link";
 
 import React from "react";
 
 interface Props {
-    category: CustomCategory[];
+    category: CategoriesGetManyOutputSingle;
     isActive?: boolean;
     isNavigationHovered?: boolean;
 }
@@ -35,7 +35,7 @@ export const CategoryDropdown = ({ category, isActive, isNavigationHovered }: Pr
     const dropdownPosition = getDropdownPosition();
 
     const toggleDropdown = () => {
-        if (category.subcategories?.docs.length) {
+        if (category.subcategories.length) {
             setIsOpen(!isOpen);
         }
     };
