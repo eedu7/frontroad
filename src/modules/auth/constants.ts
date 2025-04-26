@@ -1,1 +1,1 @@
-export const AUTH_COOKIE = "frontroad-payload-token";
+export const AUTH_COOKIE = "payload-token";
