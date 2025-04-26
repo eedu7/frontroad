@@ -107,6 +107,14 @@ export const SignUpView = () => {
                                 </FormItem>
                             )}
                         />
+                        <Button
+                            type="submit"
+                            size="lg"
+                            variant="elevated"
+                            className="hover:text-primary bg-black text-white hover:bg-pink-400"
+                        >
+                            Create account
+                        </Button>
                     </form>
                 </Form>
             </div>
