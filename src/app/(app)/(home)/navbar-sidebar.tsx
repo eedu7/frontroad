@@ -1,5 +1,7 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { useTRPC } from "@/trpc/client";
+import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import React from "react";
 
@@ -15,6 +17,9 @@ interface Props {
 }
 
 export const NavbarSidebar = ({ items, open, onOpenChange }: Props) => {
+    const trpc = useTRPC();
+    const session = useQuery(trpc.auth.session.queryOptions());
+
     return (
         <Sheet
             open={open}
@@ -41,20 +46,33 @@ export const NavbarSidebar = ({ items, open, onOpenChange }: Props) => {
                         </Link>
                     ))}
                     <div className="border-t">
-                        <Link
-                            className="flex w-full items-center p-4 text-left text-base font-medium hover:bg-black hover:text-white"
-                            href={"/sign-in"}
-                            onClick={() => onOpenChange(false)}
-                        >
-                            Log in
-                        </Link>
-                        <Link
-                            className="flex w-full items-center p-4 text-left text-base font-medium hover:bg-black hover:text-white"
-                            href={"/sign-up"}
-                            onClick={() => onOpenChange(false)}
-                        >
-                            Start selling
-                        </Link>
+                        {session.data?.user ? (
+                            // TODO: Dashboard should be visible or not
+                            <Link
+                                className="flex w-full items-center p-4 text-left text-base font-medium hover:bg-black hover:text-white"
+                                href={"/admin"}
+                                onClick={() => onOpenChange(false)}
+                            >
+                                Dashboard
+                            </Link>
+                        ) : (
+                            <>
+                                <Link
+                                    className="flex w-full items-center p-4 text-left text-base font-medium hover:bg-black hover:text-white"
+                                    href={"/sign-in"}
+                                    onClick={() => onOpenChange(false)}
+                                >
+                                    Log in
+                                </Link>
+                                <Link
+                                    className="flex w-full items-center p-4 text-left text-base font-medium hover:bg-black hover:text-white"
+                                    href={"/sign-up"}
+                                    onClick={() => onOpenChange(false)}
+                                >
+                                    Start selling
+                                </Link>
+                            </>
+                        )}
                     </div>
                 </ScrollArea>
             </SheetContent>

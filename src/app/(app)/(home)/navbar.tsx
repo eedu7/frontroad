@@ -4,6 +4,8 @@ import { NavbarSidebar } from "@/app/(app)/(home)/navbar-sidebar";
 import { Button } from "@/components/ui/button";
 
 import { cn } from "@/lib/utils";
+import { useTRPC } from "@/trpc/client";
+import { useQuery } from "@tanstack/react-query";
 import { MenuIcon } from "lucide-react";
 
 import { Poppins } from "next/font/google";
@@ -21,6 +23,9 @@ export const Navbar = () => {
     const pathname = usePathname();
 
     const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
+
+    const trpc = useTRPC();
+    const session = useQuery(trpc.auth.session.queryOptions());
 
     return (
         <>
@@ -46,19 +51,30 @@ export const Navbar = () => {
                     ))}
                 </div>
                 <div className="hidden lg:flex">
-                    <Button
-                        asChild
-                        variant="secondary"
-                        className="h-full rounded-none border-t-0 border-r-0 border-b-0 border-l bg-white px-12 text-lg transition-colors hover:bg-pink-400"
-                    >
-                        <Link href={"/sign-in"}>Log in</Link>
-                    </Button>
-                    <Button
-                        asChild
-                        className="h-full rounded-none border-t-0 border-r-0 border-b-0 border-l bg-black px-12 text-lg text-white transition-colors hover:bg-pink-400 hover:text-black"
-                    >
-                        <Link href={"/sign-up"}>Start selling</Link>
-                    </Button>
+                    {session.data?.user ? (
+                        <Button
+                            asChild
+                            className="h-full rounded-none border-t-0 border-r-0 border-b-0 border-l bg-black px-12 text-lg text-white transition-colors hover:bg-pink-400 hover:text-black"
+                        >
+                            <Link href={"/admin"}>Dashboard</Link>
+                        </Button>
+                    ) : (
+                        <>
+                            <Button
+                                asChild
+                                variant="secondary"
+                                className="h-full rounded-none border-t-0 border-r-0 border-b-0 border-l bg-white px-12 text-lg transition-colors hover:bg-pink-400"
+                            >
+                                <Link href={"/sign-in"}>Log in</Link>
+                            </Button>
+                            <Button
+                                asChild
+                                className="h-full rounded-none border-t-0 border-r-0 border-b-0 border-l bg-black px-12 text-lg text-white transition-colors hover:bg-pink-400 hover:text-black"
+                            >
+                                <Link href={"/sign-up"}>Start selling</Link>
+                            </Button>
+                        </>
+                    )}
                 </div>
                 <div className="flex items-center justify-center lg:hidden">
                     <Button
