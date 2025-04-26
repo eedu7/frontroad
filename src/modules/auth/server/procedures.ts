@@ -13,6 +13,25 @@ export const authRouter = createTRPCRouter({
         return session;
     }),
     register: baseProcedure.input(registerSchema).mutation(async ({ ctx, input }) => {
+        const existingData = await ctx.db.find({
+            collection: "users",
+            limit: 1,
+            where: {
+                username: {
+                    equals: input.username,
+                },
+            },
+        });
+
+        const existingUser = existingData.docs[0];
+
+        if (existingUser) {
+            throw new TRPCError({
+                code: "BAD_REQUEST",
+                message: "Username already exists",
+            });
+        }
+
         await ctx.db.create({
             collection: "users",
             data: {
@@ -37,8 +56,7 @@ export const authRouter = createTRPCRouter({
             });
         }
 
-        const cookies = await getCookies();
-
+        console.log("Creating up cookies");
         cookies.set({
             name: AUTH_COOKIE,
             value: data.token,

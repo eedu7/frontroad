@@ -5,11 +5,14 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { registerSchema } from "@/modules/auth/schemas";
+import { useTRPC } from "@/trpc/client";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
 import { Poppins } from "next/font/google";
 import Link from "next/link";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const poppins = Poppins({
@@ -18,6 +21,15 @@ const poppins = Poppins({
 });
 
 export const SignUpView = () => {
+    const trpc = useTRPC();
+    const register = useMutation(
+        trpc.auth.register.mutationOptions({
+            onError: (error) => {
+                toast.error(error.message);
+            },
+        }),
+    );
+
     const form = useForm<z.infer<typeof registerSchema>>({
         resolver: zodResolver(registerSchema),
         defaultValues: {
@@ -29,7 +41,7 @@ export const SignUpView = () => {
     });
 
     const onSubmit = (values: z.infer<typeof registerSchema>) => {
-        console.log(values);
+        register.mutate(values);
     };
 
     const username = form.watch("username");
@@ -108,6 +120,7 @@ export const SignUpView = () => {
                             )}
                         />
                         <Button
+                            disabled={register.isPending}
                             type="submit"
                             size="lg"
                             variant="elevated"
