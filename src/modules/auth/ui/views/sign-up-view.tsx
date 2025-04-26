@@ -1,7 +1,8 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Form } from "@/components/ui/form";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { registerSchema } from "@/modules/auth/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -24,11 +25,17 @@ export const SignUpView = () => {
             password: "",
             username: "",
         },
+        mode: "all",
     });
 
     const onSubmit = (values: z.infer<typeof registerSchema>) => {
         console.log(values);
     };
+
+    const username = form.watch("username");
+    const usernameError = form.formState.errors.username;
+
+    const showPreview = username && !usernameError;
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-5">
@@ -56,6 +63,50 @@ export const SignUpView = () => {
                                 </Link>
                             </Button>
                         </div>
+                        <h1 className="text-4xl font-medium">Join over 1,543 creators earning money on Frontroad.</h1>
+                        <FormField
+                            name="username"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel className="text-base">Username</FormLabel>
+                                    <FormControl>
+                                        <Input {...field} />
+                                    </FormControl>
+                                    <FormDescription className={cn("hidden", showPreview && "block")}>
+                                        {/* TODO: User proper method to generate preview url */}
+                                        Your store will be available at &nbsp;<strong>{username}</strong>
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            name="email"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel className="text-base">Email</FormLabel>
+                                    <FormControl>
+                                        <Input {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            name="password"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel className="text-base">Password</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            {...field}
+                                            type="password"
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
                     </form>
                 </Form>
             </div>
