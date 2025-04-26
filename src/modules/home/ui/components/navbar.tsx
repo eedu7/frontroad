@@ -1,9 +1,9 @@
 "use client";
 
-import { NavbarSidebar } from "@/app/(app)/(home)/navbar-sidebar";
 import { Button } from "@/components/ui/button";
 
 import { cn } from "@/lib/utils";
+import { NavbarSidebar } from "@/modules/home/ui/components/navbar-sidebar";
 import { useTRPC } from "@/trpc/client";
 import { useQuery } from "@tanstack/react-query";
 import { MenuIcon } from "lucide-react";
@@ -36,7 +36,7 @@ export const Navbar = () => {
             />
             <nav className="flex h-20 justify-between border-b bg-white font-medium">
                 <Link
-                    href="/"
+                    href="/public"
                     className="flex items-center pl-6"
                 >
                     <span className={cn("text-5xl font-semibold", poppins.className)}>frontroad</span>

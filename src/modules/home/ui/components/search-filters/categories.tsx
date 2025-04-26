@@ -1,12 +1,13 @@
 "use client";
 
-import { CategoriesSidebar } from "@/app/(app)/(home)/search-filters/categories-sidebar";
-import { CategoryDropdown } from "@/app/(app)/(home)/search-filters/category-dropdown";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { CategoriesGetManyOutput } from "@/modules/categories/types";
+import { CategoriesSidebar } from "@/modules/home/ui/components/search-filters/categories-sidebar";
+import { CategoryDropdown } from "@/modules/home/ui/components/search-filters/category-dropdown";
 
 import { ListFilterIcon } from "lucide-react";
+import { useParams } from "next/navigation";
 import React from "react";
 
 interface Props {
@@ -14,6 +15,8 @@ interface Props {
 }
 
 export const Categories = ({ data }: Props) => {
+    const params = useParams();
+
     const containerRef = React.useRef<HTMLDivElement>(null);
     const measureRef = React.useRef<HTMLDivElement>(null);
     const viewAllRef = React.useRef<HTMLDivElement>(null);
@@ -22,7 +25,8 @@ export const Categories = ({ data }: Props) => {
     const [isAnyHovered, setIsAnyHovered] = React.useState(false);
     const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
 
-    const activeCategory = "all";
+    const categoryParam = params.category as string | undefined;
+    const activeCategory = categoryParam || "all";
 
     const activeCategoryIndex = data.findIndex((cat) => cat.slug === activeCategory);
 
