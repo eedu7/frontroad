@@ -1,7 +1,7 @@
 "use client";
 
-import { Categories } from "@/app/(app)/(home)/search-filters/categories";
-import { SearchInput } from "@/app/(app)/(home)/search-filters/search-input";
+import { Categories } from "@/modules/home/ui/components/search-filters/categories";
+import { SearchInput } from "@/modules/home/ui/components/search-filters/search-input";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
 

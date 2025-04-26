@@ -1,11 +1,11 @@
 "use client";
 
-import { SubcategoryMenu } from "@/app/(app)/(home)/search-filters/subcategory-menu";
-import { useDropdownPosition } from "@/app/(app)/(home)/search-filters/use-dropdown-position";
 import { Button } from "@/components/ui/button";
 
 import { cn } from "@/lib/utils";
 import { CategoriesGetManyOutputSingle } from "@/modules/categories/types";
+import { SubcategoryMenu } from "@/modules/home/ui/components/search-filters/subcategory-menu";
+import { useDropdownPosition } from "@/modules/home/ui/components/search-filters/use-dropdown-position";
 import Link from "next/link";
 
 import React from "react";

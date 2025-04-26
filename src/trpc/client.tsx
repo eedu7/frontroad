@@ -1,5 +1,5 @@
 "use client";
-// ^-- to make sure we can mount the Provider from a server component
+// ^-- to make sure we can mount the Provider from a server components
 import type { QueryClient } from "@tanstack/react-query";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { createTRPCClient, httpBatchLink } from "@trpc/client";
