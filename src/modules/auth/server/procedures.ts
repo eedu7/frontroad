@@ -1,5 +1,7 @@
+import { AUTH_COOKIE } from "@/modules/auth/constants";
 import { baseProcedure, createTRPCRouter } from "@/trpc/init";
-import { headers as getHeaders } from "next/headers";
+import { TRPCError } from "@trpc/server";
+import { cookies as getCookies, headers as getHeaders } from "next/headers";
 import { z } from "zod";
 
 export const authRouter = createTRPCRouter({
@@ -35,5 +37,40 @@ export const authRouter = createTRPCRouter({
                     password: input.password, // PayloadJs automatically handles this
                 },
             });
+        }),
+    login: baseProcedure
+        .input(
+            z.object({
+                email: z.string().email(),
+                password: z.string(),
+            }),
+        )
+        .mutation(async ({ ctx, input }) => {
+            const data = await ctx.db.login({
+                collection: "users",
+                data: {
+                    email: input.email,
+                    password: input.password,
+                },
+            });
+
+            if (!data.token) {
+                throw new TRPCError({
+                    code: "UNAUTHORIZED",
+                    message: "Failed to login",
+                });
+            }
+
+            const cookies = await getCookies();
+
+            cookies.set({
+                name: AUTH_COOKIE,
+                value: data.token,
+                httpOnly: true,
+                path: "/",
+                // TODO: Ensure cross-domain cookie sharing
+            });
+
+            return data;
         }),
 });
