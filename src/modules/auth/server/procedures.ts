@@ -37,6 +37,31 @@ export const authRouter = createTRPCRouter({
                     password: input.password, // PayloadJs automatically handles this
                 },
             });
+
+            const data = await ctx.db.login({
+                collection: "users",
+                data: {
+                    email: input.email,
+                    password: input.password,
+                },
+            });
+
+            if (!data.token) {
+                throw new TRPCError({
+                    code: "UNAUTHORIZED",
+                    message: "Failed to login",
+                });
+            }
+
+            const cookies = await getCookies();
+
+            cookies.set({
+                name: AUTH_COOKIE,
+                value: data.token,
+                httpOnly: true,
+                path: "/",
+                // TODO: Ensure cross-domain cookie sharing
+            });
         }),
     login: baseProcedure
         .input(
