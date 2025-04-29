@@ -1,6 +1,8 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { useProductFilters } from "@/modules/products/hooks/use-product-filters";
+import { PriceFilter } from "@/modules/products/ui/components/price-filter";
 import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 import React from "react";
 
@@ -30,6 +32,14 @@ const ProductFilter = ({ title, className, children }: ProductFilterProps) => {
 };
 
 export const ProductFilters = () => {
+    const [filters, setfilters] = useProductFilters();
+
+    const onChange = (key: keyof typeof filters, value: unknown) => {
+        setfilters({
+            ...filters,
+            [key]: value,
+        });
+    };
     return (
         <div className="rounded-md border bg-white">
             <div className="flex items-center justify-between border-b p-4">
@@ -46,7 +56,12 @@ export const ProductFilters = () => {
                 title={"Price"}
                 className="border-b-0"
             >
-                Price filter
+                <PriceFilter
+                    minPrice={filters.minPrice}
+                    maxPrice={filters.maxPrice}
+                    onMinPriceChange={(value) => onChange("minPrice", value)}
+                    onMaxPriceChange={(value) => onChange("maxPrice", value)}
+                />
             </ProductFilter>
         </div>
     );
