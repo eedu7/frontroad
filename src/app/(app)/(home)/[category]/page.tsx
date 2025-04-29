@@ -10,14 +10,20 @@ interface Props {
 }
 
 export default async function CategoryPage({ params }: Props) {
+    const { category } = await params;
+
     const queryClient = getQueryClient();
 
-    void queryClient.prefetchQuery(trpc.products.getMany.queryOptions());
+    void queryClient.prefetchQuery(
+        trpc.products.getMany.queryOptions({
+            category,
+        }),
+    );
 
     return (
         <HydrationBoundary state={dehydrate(queryClient)}>
             <Suspense fallback={<ProductListSkeleton />}>
-                <ProductList />
+                <ProductList category={category} />
             </Suspense>
         </HydrationBoundary>
     );
