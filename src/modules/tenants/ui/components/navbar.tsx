@@ -1,4 +1,5 @@
 "use client";
+import { generateTenantURL } from "@/lib/utils";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import Image from "next/image";
@@ -21,7 +22,7 @@ export const Navbar = ({ slug }: Props) => {
         <nav className="h-20 border-b bg-white font-medium">
             <div className="mx-auto flex h-full max-w-(--breakpoint-xl) items-center justify-between px-4 lg:px-12">
                 <Link
-                    href={`/tenants/${slug}`}
+                    href={generateTenantURL(slug)}
                     className="flex items-center gap-2"
                 >
                     {data.image?.url && (
