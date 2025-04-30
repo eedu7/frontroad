@@ -1,5 +1,6 @@
 // storage-adapter-import-placeholder
 import { Tags } from "@/collections/Tags";
+import { Tenants } from "@/collections/Tenants";
 import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import { payloadCloudPlugin } from "@payloadcms/payload-cloud";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
@@ -23,7 +24,7 @@ export default buildConfig({
             baseDir: path.resolve(dirname),
         },
     },
-    collections: [Users, Media, Categories, Products, Tags],
+    collections: [Users, Media, Categories, Products, Tags, Tenants],
     editor: lexicalEditor(),
     secret: process.env.PAYLOAD_SECRET || "",
     typescript: {
