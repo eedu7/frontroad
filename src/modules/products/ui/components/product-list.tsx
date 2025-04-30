@@ -6,6 +6,7 @@ import { useProductFilters } from "@/modules/products/hooks/use-product-filters"
 import { ProductCard } from "@/modules/products/ui/components/product-card";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
+import { InboxIcon } from "lucide-react";
 import React from "react";
 
 interface Props {
@@ -26,6 +27,15 @@ export const ProductList = ({ category }: Props) => {
             },
         ),
     );
+
+    if (data.pages?.[0]?.docs.length === 0) {
+        return (
+            <div className="flex w-full flex-col items-center justify-center gap-y-4 rounded-lg border border-dashed border-black bg-white p-8">
+                <InboxIcon />
+                <p className="text-base font-medium">No products found</p>
+            </div>
+        );
+    }
 
     return (
         <>
