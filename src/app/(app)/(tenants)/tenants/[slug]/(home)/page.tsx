@@ -26,7 +26,10 @@ export default async function TenantPage({ searchParams, params }: Props) {
 
     return (
         <HydrationBoundary state={dehydrate(queryClient)}>
-            <ProductListView tenantSlug={slug} />
+            <ProductListView
+                tenantSlug={slug}
+                narrowView={true}
+            />
         </HydrationBoundary>
     );
 }

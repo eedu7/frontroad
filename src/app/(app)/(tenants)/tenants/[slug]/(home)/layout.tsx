@@ -24,7 +24,7 @@ export default async function TenantHomeLayout({ params, children }: Props) {
         <div className="flex min-h-screen flex-col bg-[#F4F4F0]">
             <HydrationBoundary state={dehydrate(queryClient)}>
                 <Suspense fallback={<NavbarSkeleton />}>
-                    <Navbar slug={slug as string} />
+                    <Navbar slug={slug} />
                 </Suspense>
             </HydrationBoundary>
             <main className="flex-1">
