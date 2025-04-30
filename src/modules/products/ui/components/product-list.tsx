@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { DEFAULT_LIMIT } from "@/constants";
 import { useProductFilters } from "@/modules/products/hooks/use-product-filters";
-import { ProductCard } from "@/modules/products/ui/components/product-card";
+import { ProductCard, ProductCardSkeleton } from "@/modules/products/ui/components/product-card";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { InboxIcon } from "lucide-react";
@@ -70,5 +70,15 @@ export const ProductList = ({ category }: Props) => {
                 )}
             </div>
         </>
+    );
+};
+
+export const ProductListSkeleton = () => {
+    return (
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+            {Array.from({ length: DEFAULT_LIMIT }).map((_, index) => (
+                <ProductCardSkeleton key={index} />
+            ))}
+        </div>
     );
 };

@@ -1,5 +1,5 @@
 import { ProductFilters } from "@/modules/products/ui/components/product-filters";
-import { ProductList } from "@/modules/products/ui/components/product-list";
+import { ProductList, ProductListSkeleton } from "@/modules/products/ui/components/product-list";
 import { ProductSort } from "@/modules/products/ui/components/product-sort";
 import React, { Suspense } from "react";
 
@@ -28,8 +28,4 @@ export const ProductListView = ({ category }: Props) => {
             </div>
         </div>
     );
-};
-
-const ProductListSkeleton = () => {
-    return <p>Loading...</p>;
 };
