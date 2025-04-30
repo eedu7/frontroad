@@ -1,4 +1,4 @@
-import { parseAsArrayOf, parseAsString, parseAsStringLiteral, useQueryStates } from "nuqs";
+import { createLoader, parseAsArrayOf, parseAsString, parseAsStringLiteral } from "nuqs/server";
 
 export const sortValues = ["curated", "trending", "hot_and_new"] as const;
 
@@ -9,6 +9,4 @@ export const params = {
     tags: parseAsArrayOf(parseAsString).withOptions({ clearOnDefault: true }).withDefault([]),
 };
 
-export const useProductFilters = () => {
-    return useQueryStates(params);
-};
+export const loadProductFilters = createLoader(params);
