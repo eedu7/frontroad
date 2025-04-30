@@ -5,9 +5,10 @@ import React, { Suspense } from "react";
 
 interface Props {
     category?: string;
+    tenantSlug?: string;
 }
 
-export const ProductListView = ({ category }: Props) => {
+export const ProductListView = ({ category, tenantSlug }: Props) => {
     return (
         <div className="flex flex-col gap-4 px-4 py-8 lg:px-12">
             <div className="flex flex-col justify-between gap-y-2 lg:flex-row lg:items-center lg:gap-y-0">
@@ -21,7 +22,10 @@ export const ProductListView = ({ category }: Props) => {
                 </div>
                 <div className="lg:col-span-4 xl:col-span-6">
                     <Suspense fallback={<ProductListSkeleton />}>
-                        <ProductList category={category} />
+                        <ProductList
+                            category={category}
+                            tenantSlug={tenantSlug}
+                        />
                     </Suspense>
                 </div>
             </div>
