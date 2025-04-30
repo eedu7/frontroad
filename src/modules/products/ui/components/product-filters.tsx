@@ -3,6 +3,7 @@
 import { cn } from "@/lib/utils";
 import { useProductFilters } from "@/modules/products/hooks/use-product-filters";
 import { PriceFilter } from "@/modules/products/ui/components/price-filter";
+import { TagsFilter } from "@/modules/products/ui/components/tags-filter";
 import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 import React from "react";
 
@@ -38,6 +39,7 @@ export const ProductFilters = () => {
         setfilters({
             minPrice: "",
             maxPrice: "",
+            tags: [],
         });
     };
 
@@ -54,6 +56,7 @@ export const ProductFilters = () => {
             [key]: value,
         });
     };
+
     return (
         <div className="rounded-md border bg-white">
             <div className="flex items-center justify-between border-b p-4">
@@ -68,15 +71,21 @@ export const ProductFilters = () => {
                     </button>
                 )}
             </div>
-            <ProductFilter
-                title={"Price"}
-                className="border-b-0"
-            >
+            <ProductFilter title={"Price"}>
                 <PriceFilter
                     minPrice={filters.minPrice}
                     maxPrice={filters.maxPrice}
                     onMinPriceChange={(value) => onChange("minPrice", value)}
                     onMaxPriceChange={(value) => onChange("maxPrice", value)}
+                />
+            </ProductFilter>
+            <ProductFilter
+                title={"Tags"}
+                className="border-b-0"
+            >
+                <TagsFilter
+                    value={filters.tags}
+                    onChange={(value) => onChange("tags", value)}
                 />
             </ProductFilter>
         </div>
