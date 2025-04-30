@@ -24,11 +24,11 @@ export const productsRouter = createTRPCRouter({
                 };
             } else if (input.minPrice) {
                 where.price = {
-                    less_than_equal: input.maxPrice,
+                    greater_than_equal: input.minPrice,
                 };
             } else if (input.maxPrice) {
                 where.price = {
-                    greater_than_equal: input.minPrice,
+                    less_than_equal: input.maxPrice,
                 };
             }
 
