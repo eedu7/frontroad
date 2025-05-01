@@ -6,6 +6,7 @@ import { CheckoutItem } from "@/modules/checkout/ui/components/checkout-item";
 import { CheckoutSidebar } from "@/modules/checkout/ui/components/checkout-sidebar";
 import { useTRPC } from "@/trpc/client";
 import { useQuery } from "@tanstack/react-query";
+import { InboxIcon } from "lucide-react";
 import React from "react";
 import { toast } from "sonner";
 
@@ -30,6 +31,15 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
         }
     }, [error, clearAllCarts]);
 
+    if (data?.docs.length === 0) {
+        return (
+            <div className="flex w-full flex-col items-center justify-center gap-y-4 rounded-lg border border-dashed border-black bg-white p-8">
+                <InboxIcon />
+                <p className="text-base font-medium">No products found</p>
+            </div>
+        );
+    }
+
     return (
         <div className="px-4 pt-4 lg:px-12 lg:pt-15">
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-7 lg:gap-16">
@@ -52,7 +62,7 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
                 </div>
                 <div className="lg:col-span-3">
                     <CheckoutSidebar
-                        total={data?.totalPrice || 9}
+                        total={data?.totalPrice}
                         onCheckout={() => {}}
                         isCanceled={false}
                         isPending={false}
