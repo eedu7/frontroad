@@ -1,4 +1,5 @@
 // storage-adapter-import-placeholder
+import { Orders } from "@/collections/Orders";
 import { Tags } from "@/collections/Tags";
 import { Tenants } from "@/collections/Tenants";
 import { Config } from "@/payload-types";
@@ -26,7 +27,7 @@ export default buildConfig({
             baseDir: path.resolve(dirname),
         },
     },
-    collections: [Users, Media, Categories, Products, Tags, Tenants],
+    collections: [Users, Media, Categories, Products, Tags, Tenants, Orders],
     editor: lexicalEditor(),
     secret: process.env.PAYLOAD_SECRET || "",
     typescript: {
