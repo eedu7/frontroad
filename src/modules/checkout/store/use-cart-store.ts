@@ -32,7 +32,8 @@ export const useCartStore = create<CartState>()(
                     tenantCarts: {
                         ...state.tenantCarts,
                         [tenantSlug]: {
-                            productsId: [...(state.tenantCarts[tenantSlug]?.productsId || []), productId],
+                            productsId:
+                                state.tenantCarts[tenantSlug]?.productsId.filter((id) => id !== productId) || [],
                         },
                     },
                 })),
@@ -50,7 +51,7 @@ export const useCartStore = create<CartState>()(
             getCartByTenant: (tenantSlug: string) => get().tenantCarts[tenantSlug]?.productsId || [],
         }),
         {
-            name: "funroad-cart",
+            name: "frontroad-cart",
             storage: createJSONStorage(() => localStorage),
         },
     ),
