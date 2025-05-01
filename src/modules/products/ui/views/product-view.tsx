@@ -4,6 +4,7 @@ import { StarRating } from "@/components/star-rating";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { formatCurrency, generateTenantURL } from "@/lib/utils";
+import { CartButton } from "@/modules/products/ui/components/cart-button";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { LinkIcon, StarIcon } from "lucide-react";
@@ -95,12 +96,10 @@ export const ProductView = ({ productId, tenantSlug }: Props) => {
                             <div className="flex flex-col gap-4 border-b p-6">
                                 <div className="flex flex-row items-center gap-2">
                                     {/* TODO: Make it dynamic */}
-                                    <Button
-                                        variant="elevated"
-                                        className="flex-1 border bg-pink-400"
-                                    >
-                                        Add to cart
-                                    </Button>
+                                    <CartButton
+                                        tenantSlug={tenantSlug}
+                                        productId={productId}
+                                    />
                                     <Button
                                         variant="elevated"
                                         className="size-12 border"
