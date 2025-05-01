@@ -6,7 +6,7 @@ import { CheckoutItem } from "@/modules/checkout/ui/components/checkout-item";
 import { CheckoutSidebar } from "@/modules/checkout/ui/components/checkout-sidebar";
 import { useTRPC } from "@/trpc/client";
 import { useQuery } from "@tanstack/react-query";
-import { InboxIcon } from "lucide-react";
+import { InboxIcon, LoaderIcon } from "lucide-react";
 import React from "react";
 import { toast } from "sonner";
 
@@ -18,7 +18,7 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
     const { productIds, clearAllCarts, removeProduct } = useCart(tenantSlug);
 
     const trpc = useTRPC();
-    const { data, error } = useQuery(
+    const { data, error, isLoading } = useQuery(
         trpc.checkout.getProducts.queryOptions({
             ids: productIds,
         }),
@@ -30,12 +30,23 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
             toast.warning("Invalid products found, cart cleared");
         }
     }, [error, clearAllCarts]);
+    
+    if (isLoading) {
+        return (
+            <div className="px-4 pt-4 lg:px-12 lg:pt-15">
+                <div className="flex w-full flex-col items-center justify-center gap-y-4 rounded-lg border border-dashed border-black bg-white p-8">
+                    <LoaderIcon className="text-muted-foreground animate-spin" />
+                </div>
+            </div>
+    }
 
     if (data?.docs.length === 0) {
         return (
-            <div className="flex w-full flex-col items-center justify-center gap-y-4 rounded-lg border border-dashed border-black bg-white p-8">
-                <InboxIcon />
-                <p className="text-base font-medium">No products found</p>
+            <div className="px-4 pt-4 lg:px-12 lg:pt-15">
+                <div className="flex w-full flex-col items-center justify-center gap-y-4 rounded-lg border border-dashed border-black bg-white p-8">
+                    <InboxIcon />
+                    <p className="text-base font-medium">No products found</p>
+                </div>
             </div>
         );
     }
