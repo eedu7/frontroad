@@ -4,13 +4,27 @@ import { StarRating } from "@/components/star-rating";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { formatCurrency, generateTenantURL } from "@/lib/utils";
-import { CartButton } from "@/modules/products/ui/components/cart-button";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { LinkIcon, StarIcon } from "lucide-react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import React, { Fragment } from "react";
+// import { CartButton } from "@/modules/products/ui/components/cart-button";
+
+const CartButton = dynamic(() => import("../components/cart-button").then((mod) => mod.CartButton), {
+    ssr: false,
+    loading: () => (
+        <Button
+            variant="elevated"
+            className="flex-1 bg-pink-400"
+            disabled
+        >
+            Add to cart
+        </Button>
+    ),
+});
 
 // TODO: add real ratings
 
