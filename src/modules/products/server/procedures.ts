@@ -6,6 +6,12 @@ import { Sort, Where } from "payload";
 import { z } from "zod";
 
 export const productsRouter = createTRPCRouter({
+    getOne: baseProcedure.input(z.object({ id: z.string() })).query(async ({ ctx, input }) => {
+        return await ctx.db.findByID({
+            collection: "products",
+            id: input.id,
+        });
+    }),
     getMany: baseProcedure
         .input(
             z.object({
