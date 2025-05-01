@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { formatCurrency } from "@/lib/utils";
+import { CircleXIcon } from "lucide-react";
 import React from "react";
 
 interface Props {
@@ -27,6 +28,16 @@ export const CheckoutSidebar = ({ total, onCheckout, isCanceled, isPending }: Pr
                     Checkout
                 </Button>
             </div>
+            {isCanceled && (
+                <div className="flex items-center justify-center border-t p-4">
+                    <div className="flex w-full items-center rounded border border-red-400 bg-red-100 px-4 py-3 font-medium">
+                        <div className="flex items-center">
+                            <CircleXIcon className="mr-2 size-6 fill-red-500 text-red-100" />
+                            <span>Checkout failed. Please try again.</span>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
