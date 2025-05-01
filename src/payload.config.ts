@@ -1,6 +1,7 @@
 // storage-adapter-import-placeholder
 import { Tags } from "@/collections/Tags";
 import { Tenants } from "@/collections/Tenants";
+import { Config } from "@/payload-types";
 import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import { payloadCloudPlugin } from "@payloadcms/payload-cloud";
 import { multiTenantPlugin } from "@payloadcms/plugin-multi-tenant";
@@ -38,14 +39,14 @@ export default buildConfig({
     plugins: [
         payloadCloudPlugin(),
         // storage-adapter-placeholder
-        multiTenantPlugin({
+        multiTenantPlugin<Config>({
             collections: {
                 products: {},
             },
             tenantsArrayField: {
                 includeDefaultField: false,
             },
-            userHasAccessToAllTenants: (user) => Boolean(user?.roles.includes("super-admin")),
+            userHasAccessToAllTenants: (user) => Boolean(user?.roles?.includes("super-admin")),
         }),
     ],
 });

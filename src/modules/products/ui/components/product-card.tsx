@@ -1,5 +1,5 @@
 "use client";
-import { generateTenantURL } from "@/lib/utils";
+import { formatCurrency, generateTenantURL } from "@/lib/utils";
 import { StarIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,7 +9,7 @@ interface Props {
     id: string;
     name: string;
     imageUrl?: string | null;
-    tenantUsername: string;
+    tenantSlug: string;
     tenantImageUrl?: string | null;
     reviewRating: number;
     reviewCount: number;
@@ -17,7 +17,7 @@ interface Props {
 }
 
 export const ProductCard = ({
-    tenantUsername,
+    tenantSlug,
     tenantImageUrl,
     imageUrl,
     id,
@@ -32,11 +32,11 @@ export const ProductCard = ({
         e.preventDefault();
         e.stopPropagation();
 
-        router.push(generateTenantURL(tenantUsername));
+        router.push(generateTenantURL(tenantSlug));
     };
 
     return (
-        <Link href={`/products/${id}`}>
+        <Link href={`http://localhost:3000/${generateTenantURL(tenantSlug)}/products/${id}`}>
             <div className="flex h-full flex-col overflow-hidden rounded-md border bg-white transition-shadow hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
                 <div className="relative aspect-square">
                     <Image
@@ -55,13 +55,13 @@ export const ProductCard = ({
                         {tenantImageUrl && (
                             <Image
                                 src={tenantImageUrl}
-                                alt={tenantUsername}
+                                alt={tenantSlug}
                                 width={16}
                                 height={16}
                                 className="size-[16px] shrink-0 rounded-full border"
                             />
                         )}
-                        <p className="text-sm font-medium underline">{tenantUsername}</p>
+                        <p className="text-sm font-medium underline">{tenantSlug}</p>
                     </div>
                     {reviewCount > 0 && (
                         <div className="flex items-center gap-1">
@@ -73,13 +73,7 @@ export const ProductCard = ({
                     )}
                 </div>
                 <div className="p-4">
-                    <div className="relative w-fit border bg-pink-400 px-2 py-1">
-                        {new Intl.NumberFormat("en-US", {
-                            style: "currency",
-                            currency: "USD",
-                            maximumFractionDigits: 0,
-                        }).format(Number(price))}
-                    </div>
+                    <div className="relative w-fit border bg-pink-400 px-2 py-1">{formatCurrency(price)}</div>
                 </div>
             </div>
         </Link>
