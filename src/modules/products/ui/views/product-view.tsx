@@ -23,7 +23,7 @@ export const ProductView = ({ productId, tenantSlug }: Props) => {
 
     // TODO: Why the productId is not working
     // TODO: Also an other component have the same issue
-    const { data } = useSuspenseQuery(trpc.products.getOne.queryOptions({ id: "68123c49c5e7d84e87dee8cf" }));
+    const { data } = useSuspenseQuery(trpc.products.getOne.queryOptions({ id: productId }));
 
     return (
         <div className="px-4 py-10 lg:px-12">
