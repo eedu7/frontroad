@@ -5,7 +5,7 @@ import { useCart } from "@/modules/checkout/hooks/use-cart";
 import { CheckoutItem } from "@/modules/checkout/ui/components/checkout-item";
 import { CheckoutSidebar } from "@/modules/checkout/ui/components/checkout-sidebar";
 import { useTRPC } from "@/trpc/client";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { InboxIcon, LoaderIcon } from "lucide-react";
 import React from "react";
 import { toast } from "sonner";
@@ -21,6 +21,13 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
     const { data, error, isLoading } = useQuery(
         trpc.checkout.getProducts.queryOptions({
             ids: productIds,
+        }),
+    );
+
+    const purchase = useMutation(
+        trpc.checkout.purchase.mutationOptions({
+            onSuccess: (data: any) => {},
+            onError: (error: any) => {},
         }),
     );
 
@@ -76,9 +83,9 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
                     {data?.totalPrice && (
                         <CheckoutSidebar
                             total={data.totalPrice}
-                            onCheckout={() => {}}
+                            onPurchase={() => purchase.mutate({ tenantSlug, productIds })}
                             isCanceled={false}
-                            isPending={false}
+                            disabled={purchase.isPending}
                         />
                     )}
                 </div>
