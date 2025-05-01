@@ -7,9 +7,24 @@ import { formatCurrency, generateTenantURL } from "@/lib/utils";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { LinkIcon, StarIcon } from "lucide-react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import React, { Fragment } from "react";
+// import { CartButton } from "@/modules/products/ui/components/cart-button";
+
+const CartButton = dynamic(() => import("../components/cart-button").then((mod) => mod.CartButton), {
+    ssr: false,
+    loading: () => (
+        <Button
+            variant="elevated"
+            className="flex-1 bg-pink-400"
+            disabled
+        >
+            Add to cart
+        </Button>
+    ),
+});
 
 // TODO: add real ratings
 
@@ -95,12 +110,10 @@ export const ProductView = ({ productId, tenantSlug }: Props) => {
                             <div className="flex flex-col gap-4 border-b p-6">
                                 <div className="flex flex-row items-center gap-2">
                                     {/* TODO: Make it dynamic */}
-                                    <Button
-                                        variant="elevated"
-                                        className="flex-1 border bg-pink-400"
-                                    >
-                                        Add to cart
-                                    </Button>
+                                    <CartButton
+                                        tenantSlug={tenantSlug}
+                                        productId={productId}
+                                    />
                                     <Button
                                         variant="elevated"
                                         className="size-12 border"
