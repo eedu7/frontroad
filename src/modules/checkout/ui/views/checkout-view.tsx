@@ -3,6 +3,7 @@
 import { generateTenantURL } from "@/lib/utils";
 import { useCart } from "@/modules/checkout/hooks/use-cart";
 import { CheckoutItem } from "@/modules/checkout/ui/components/checkout-item";
+import { CheckoutSidebar } from "@/modules/checkout/ui/components/checkout-sidebar";
 import { useTRPC } from "@/trpc/client";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
@@ -49,7 +50,14 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
                         ))}
                     </div>
                 </div>
-                <div className="lg:col-span-3">Checkout sidebar</div>
+                <div className="lg:col-span-3">
+                    <CheckoutSidebar
+                        total={data?.totalPrice || 9}
+                        onCheckout={() => {}}
+                        isCanceled={false}
+                        isPending={false}
+                    />
+                </div>
             </div>
         </div>
     );
