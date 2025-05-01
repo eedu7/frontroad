@@ -30,7 +30,7 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
             toast.warning("Invalid products found, cart cleared");
         }
     }, [error, clearAllCarts]);
-    
+
     if (isLoading) {
         return (
             <div className="px-4 pt-4 lg:px-12 lg:pt-15">
@@ -38,6 +38,7 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
                     <LoaderIcon className="text-muted-foreground animate-spin" />
                 </div>
             </div>
+        );
     }
 
     if (data?.docs.length === 0) {
@@ -72,12 +73,14 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
                     </div>
                 </div>
                 <div className="lg:col-span-3">
-                    <CheckoutSidebar
-                        total={data?.totalPrice}
-                        onCheckout={() => {}}
-                        isCanceled={false}
-                        isPending={false}
-                    />
+                    {data?.totalPrice && (
+                        <CheckoutSidebar
+                            total={data.totalPrice}
+                            onCheckout={() => {}}
+                            isCanceled={false}
+                            isPending={false}
+                        />
+                    )}
                 </div>
             </div>
         </div>
