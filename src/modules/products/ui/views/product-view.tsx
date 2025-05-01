@@ -110,25 +110,11 @@ export const ProductView = ({ productId, tenantSlug }: Props) => {
                             <div className="flex flex-col gap-4 border-b p-6">
                                 <div className="flex flex-row items-center gap-2">
                                     {/* TODO: Make it dynamic */}
-                                    {data.isPurchased ? (
-                                        <Button
-                                            variant="elevated"
-                                            asChild
-                                            className="flex-1 bg-pink-400 font-medium"
-                                        >
-                                            <Link
-                                                href={`/library/${data.id}`}
-                                                prefetch
-                                            >
-                                                View in library
-                                            </Link>
-                                        </Button>
-                                    ) : (
-                                        <CartButton
-                                            tenantSlug={tenantSlug}
-                                            productId={productId}
-                                        />
-                                    )}
+                                    <CartButton
+                                        tenantSlug={tenantSlug}
+                                        productId={productId}
+                                        isPurchased={data.isPurchased}
+                                    />
 
                                     <Button
                                         variant="elevated"
