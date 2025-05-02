@@ -31,6 +31,7 @@ export const Users: CollectionConfig = {
     },
     admin: {
         useAsTitle: "email",
+        hidden: ({ user }) => !isSuperAdmin(user),
     },
     auth: true,
     fields: [
@@ -49,6 +50,9 @@ export const Users: CollectionConfig = {
             defaultValue: ["user"],
             hasMany: true,
             options: ["super-admin", "user"],
+            access: {
+                update: ({ req }) => isSuperAdmin(req.user),
+            },
         },
         {
             ...defaultTenantsArrayField,
