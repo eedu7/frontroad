@@ -1,6 +1,7 @@
+import { ProductList, ProductListSkeleton } from "@/modules/library/ui/components/product-list";
 import { ArrowLeftIcon } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import React, { Suspense } from "react";
 
 export const LibraryView = () => {
     return (
@@ -21,7 +22,11 @@ export const LibraryView = () => {
                     <p className="font-medium">Your purchases and reviews</p>
                 </div>
             </header>
-            <section className="mx-auto max-w-(--breakpoint-xl) px-4 py-10 lg:px-12"></section>
+            <section className="mx-auto max-w-(--breakpoint-xl) px-4 py-10 lg:px-12">
+                <Suspense fallback={<ProductListSkeleton />}>
+                    <ProductList />
+                </Suspense>
+            </section>
         </div>
     );
 };
