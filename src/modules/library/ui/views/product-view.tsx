@@ -1,5 +1,6 @@
 "use client";
 
+import { ReviewSidebar } from "@/modules/library/ui/components/review-sidebar";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { ArrowLeftIcon } from "lucide-react";
@@ -40,7 +41,7 @@ export const ProductView = ({ productId }: ProductViewProps) => {
                 <div className="grid grid-cols-1 gap-4 lg:grid-cols-7 lg:gap-16">
                     <div className="lg:col-span-2">
                         <div className="gap-4 rounded-md border bg-white p-4">
-                            {/* TODO: Review Sidebar*/}TODO: Review Sidebar
+                            <ReviewSidebar productId={productId} />
                         </div>
                     </div>
                     <div className="lg:col-span-5">
