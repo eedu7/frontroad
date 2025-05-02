@@ -6,7 +6,7 @@ import { useCheckoutStates } from "@/modules/checkout/hooks/use-checkout-states"
 import { CheckoutItem } from "@/modules/checkout/ui/components/checkout-item";
 import { CheckoutSidebar } from "@/modules/checkout/ui/components/checkout-sidebar";
 import { useTRPC } from "@/trpc/client";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { InboxIcon, LoaderIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -22,6 +22,7 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
     const { productIds, clearAllCarts, removeProduct, clearCart } = useCart(tenantSlug);
 
     const trpc = useTRPC();
+    const queryClient = useQueryClient();
     const { data, error, isLoading } = useQuery(
         trpc.checkout.getProducts.queryOptions({
             ids: productIds,
@@ -42,6 +43,7 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
             onError: (error: any) => {
                 if (error.data?.code === "UNAUTHORIZED") {
                     // TODO: Modify when subdomain enables
+
                     router.push("/sign-in");
                 }
                 toast.error(error.message);
@@ -56,8 +58,8 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
                 cancel: true,
             });
             clearCart();
-            // TODO: invalidate library
-            router.push("/products");
+            queryClient.invalidateQueries(trpc.library.getMany.infiniteQueryFilter());
+            router.push("/library");
         }
     }, [states.success, clearCart, router]);
 
@@ -66,7 +68,7 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
             clearCart();
             toast.warning("Invalid products found, cart cleared");
         }
-    }, [error, clearCart]);
+    }, [error, clearCart, queryClient, trpc.library.getMany]);
 
     if (isLoading) {
         return (
