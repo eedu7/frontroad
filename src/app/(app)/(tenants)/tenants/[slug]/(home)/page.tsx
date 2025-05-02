@@ -13,7 +13,7 @@ interface Props {
 export default async function TenantPage({ searchParams, params }: Props) {
     const { slug } = await params;
 
-    const filters = loadProductFilters(searchParams);
+    const filters = await loadProductFilters(searchParams);
 
     const queryClient = getQueryClient();
     void queryClient.prefetchInfiniteQuery(

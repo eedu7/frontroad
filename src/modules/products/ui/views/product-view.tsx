@@ -113,7 +113,9 @@ export const ProductView = ({ productId, tenantSlug }: Props) => {
                                     <CartButton
                                         tenantSlug={tenantSlug}
                                         productId={productId}
+                                        isPurchased={data.isPurchased}
                                     />
+
                                     <Button
                                         variant="elevated"
                                         className="size-12 border"
