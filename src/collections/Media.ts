@@ -1,16 +1,21 @@
-import type { CollectionConfig } from 'payload'
+import { isSuperAdmin } from "@/trpc/access";
+import type { CollectionConfig } from "payload";
 
 export const Media: CollectionConfig = {
-  slug: 'media',
-  access: {
-    read: () => true,
-  },
-  fields: [
-    {
-      name: 'alt',
-      type: 'text',
-      required: true,
+    slug: "media",
+    access: {
+        read: () => true,
+        delete: ({ req }) => isSuperAdmin(req.user),
     },
-  ],
-  upload: true,
-}
+    admin: {
+        hidden: ({ user }) => !isSuperAdmin(user),
+    },
+    fields: [
+        {
+            name: "alt",
+            type: "text",
+            required: true,
+        },
+    ],
+    upload: true,
+};
