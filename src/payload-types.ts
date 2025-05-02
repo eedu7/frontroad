@@ -169,6 +169,9 @@ export interface Tenant {
    */
   slug: string;
   image?: (string | null) | Media;
+  /**
+   * Stripe Account ID assoicaited with your shop
+   */
   stripeAccountId: string;
   /**
    * You cannot create product until you submit your Stripe details.
