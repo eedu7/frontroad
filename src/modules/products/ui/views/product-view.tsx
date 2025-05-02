@@ -11,6 +11,7 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import React, { Fragment } from "react";
+import { toast } from "sonner";
 // import { CartButton } from "@/modules/products/ui/components/cart-button";
 
 const CartButton = dynamic(() => import("../components/cart-button").then((mod) => mod.CartButton), {
@@ -80,21 +81,22 @@ export const ProductView = ({ productId, tenantSlug }: Props) => {
                                 </Link>
                             </div>
                             <div className="hidden items-center justify-center px-6 py-4 lg:flex">
-                                <div className="flex items-center gap-1">
+                                <div className="flex items-center gap-2">
                                     <StarRating
-                                        rating={3}
+                                        rating={data.reviewRating}
                                         iconClassName="size-4"
                                     />
+                                    <p className="text-base font-medium">{data.reviewCount} ratings</p>
                                 </div>
                             </div>
                         </div>
                         <div className="flex items-center justify-center px-6 py-4 lg:hidden">
-                            <div className="flex items-center gap-1">
+                            <div className="flex items-center gap-2">
                                 <StarRating
-                                    rating={3}
+                                    rating={data.reviewRating}
                                     iconClassName="size-4"
                                 />
-                                <p className="text-base font-medium">{5} ratings</p>
+                                <p className="text-base font-medium">{data.reviewCount} ratings</p>
                             </div>
                         </div>
                         <div className="p-6">
@@ -120,7 +122,10 @@ export const ProductView = ({ productId, tenantSlug }: Props) => {
                                         variant="elevated"
                                         className="size-12 border"
                                         disabled={false}
-                                        onClick={() => {}}
+                                        onClick={() => {
+                                            navigator.clipboard.writeText(window.location.href);
+                                            toast.success("URL copied to clipboard");
+                                        }}
                                     >
                                         <LinkIcon />
                                     </Button>
@@ -136,8 +141,8 @@ export const ProductView = ({ productId, tenantSlug }: Props) => {
                                     <h3 className="text-xl font-medium">Ratings</h3>
                                     <div className="flex items-center gap-x-1 font-medium">
                                         <StarIcon className="size-4 fill-black" />
-                                        <p>({5})</p>
-                                        <p className="text-base">{5} ratings</p>
+                                        <p>({data.reviewRating})</p>
+                                        <p className="text-base">{data.reviewCount} ratings</p>
                                     </div>
                                 </div>
                                 <div className="mt-4 grid grid-cols-[auto_1fr_auto] gap-3">
@@ -147,11 +152,10 @@ export const ProductView = ({ productId, tenantSlug }: Props) => {
                                                 {stars} {stars === 1 ? "star" : "stars"}
                                             </div>
                                             <Progress
-                                                value={25}
-                                                max={100}
+                                                value={data.ratingDistribution[stars]}
                                                 className="h-[1lh]"
                                             />
-                                            <div className="font-medium">{25}%</div>
+                                            <div className="font-medium">{data.ratingDistribution[stars]}%</div>
                                         </Fragment>
                                     ))}
                                 </div>
