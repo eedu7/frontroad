@@ -1,3 +1,4 @@
+import { ProductView } from "@/modules/library/ui/views/product-view";
 import { getQueryClient, trpc } from "@/trpc/server";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import React from "react";
@@ -19,7 +20,7 @@ export default async function LibraryIDPage({ params }: Props) {
 
     return (
         <HydrationBoundary state={dehydrate(queryClient)}>
-            <ProductView />
+            <ProductView productId={productId} />
         </HydrationBoundary>
     );
 }
