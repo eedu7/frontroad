@@ -21,7 +21,7 @@ export const StarPicker = ({ value = 0, onChange, disabled, className }: Props) 
                     key={star}
                     type="button"
                     disabled={disabled}
-                    className={cn("p-0.5 transition hover:scale-110", !disabled && "cursor-pointer")}
+                    className={cn("p-0.5 transition hover:scale-110", !disabled && "cursor-pointer hover:scale-100")}
                     onClick={() => onChange?.(star)}
                     onMouseEnter={() => setHoverValue(star)}
                     onMouseLeave={() => setHoverValue(0)}
