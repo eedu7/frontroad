@@ -6,13 +6,12 @@ import { Progress } from "@/components/ui/progress";
 import { formatCurrency, generateTenantURL } from "@/lib/utils";
 import { useTRPC } from "@/trpc/client";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { LinkIcon, StarIcon } from "lucide-react";
+import { CheckCheckIcon, LinkIcon, StarIcon } from "lucide-react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import React, { Fragment } from "react";
 import { toast } from "sonner";
-// import { CartButton } from "@/modules/products/ui/components/cart-button";
 
 const CartButton = dynamic(() => import("../components/cart-button").then((mod) => mod.CartButton), {
     ssr: false,
@@ -40,6 +39,8 @@ export const ProductView = ({ productId, tenantSlug }: Props) => {
     // TODO: Why the productId is not working
     // TODO: Also an other component have the same issue
     const { data } = useSuspenseQuery(trpc.products.getOne.queryOptions({ id: productId }));
+
+    const [isCopied, setIsCopied] = React.useState<boolean>(false);
 
     return (
         <div className="px-4 py-10 lg:px-12">
@@ -121,13 +122,18 @@ export const ProductView = ({ productId, tenantSlug }: Props) => {
                                     <Button
                                         variant="elevated"
                                         className="size-12 border"
-                                        disabled={false}
+                                        disabled={isCopied}
                                         onClick={() => {
+                                            setIsCopied(true);
                                             navigator.clipboard.writeText(window.location.href);
                                             toast.success("URL copied to clipboard");
+
+                                            setTimeout(() => {
+                                                setIsCopied(false);
+                                            }, 1000);
                                         }}
                                     >
-                                        <LinkIcon />
+                                        {isCopied ? <CheckCheckIcon /> : <LinkIcon />}
                                     </Button>
                                 </div>
                                 <p className="text-center font-medium">
