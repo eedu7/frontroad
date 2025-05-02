@@ -13,7 +13,6 @@ export const Categories: CollectionConfig = {
         useAsTitle: "name",
         hidden: ({ user }) => !isSuperAdmin(user),
     },
-
     fields: [
         {
             name: "name",
