@@ -28,6 +28,9 @@ export const Tenants: CollectionConfig = {
             index: true,
             required: true,
             unique: true,
+            access: {
+                update: ({ req }) => isSuperAdmin(req.user),
+            },
             admin: {
                 description: "This is the name of the store. (e.g [slug].frontroad.com Store)",
             },
