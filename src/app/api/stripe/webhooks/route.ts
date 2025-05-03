@@ -81,6 +81,7 @@ export async function POST(req: Request) {
                                 user: user.id,
                                 product: item.price.product.metadata.id,
                                 name: item.price.product.name,
+                                stripeAccountId: event.account,
                             },
                         });
                     }
