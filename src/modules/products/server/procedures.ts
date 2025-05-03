@@ -2,6 +2,7 @@ import { DEFAULT_LIMIT } from "@/constants";
 import { sortValues } from "@/modules/products/searchParams";
 import { Category, Media, Tenant } from "@/payload-types";
 import { baseProcedure, createTRPCRouter } from "@/trpc/init";
+import { TRPCError } from "@trpc/server";
 import { headers as getHeaders } from "next/headers";
 import { Sort, Where } from "payload";
 import { z } from "zod";
@@ -18,6 +19,13 @@ export const productsRouter = createTRPCRouter({
                 content: false,
             },
         });
+
+        if (product.isArchived) {
+            throw new TRPCError({
+                code: "NOT_FOUND",
+                message: "Product not found.",
+            });
+        }
 
         let isPurchased: boolean = false;
 
@@ -108,6 +116,9 @@ export const productsRouter = createTRPCRouter({
         .query(async ({ ctx, input }) => {
             const where: Where = {
                 price: {},
+                isArchived: {
+                    not_equals: true,
+                },
             };
 
             let sort: Sort = "-createdAt";
