@@ -41,7 +41,7 @@ export default buildConfig({
                     media: {
                         fields: [
                             {
-                                name: "name",
+                                name: "alt",
                                 type: "text",
                             },
                         ],
