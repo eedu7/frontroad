@@ -98,7 +98,7 @@ export const checkoutRouter = createTRPCRouter({
                 },
             });
 
-            const tenant = tenantsData.docs[0] as Tenant;
+            const tenant = tenantsData.docs[0];
 
             if (!tenant) {
                 throw new TRPCError({
