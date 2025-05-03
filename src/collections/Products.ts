@@ -29,7 +29,7 @@ export const Products: CollectionConfig = {
         {
             name: "description",
             // TODO: Change to RichText
-            type: "text",
+            type: "richText",
         },
         {
             name: "price",
@@ -66,7 +66,7 @@ export const Products: CollectionConfig = {
         {
             name: "content",
             // TODO: Change to RichText
-            type: "textarea",
+            type: "richText",
             admin: {
                 description:
                     "Protected content only visible to customer after purchase. Add product documentation," +
