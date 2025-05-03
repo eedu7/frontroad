@@ -3,6 +3,7 @@
 import { useTRPC } from "@/trpc/client";
 import { useMutation } from "@tanstack/react-query";
 import { LoaderIcon } from "lucide-react";
+
 import React from "react";
 
 export default function StripeVerifyPage() {
@@ -25,7 +26,7 @@ export default function StripeVerifyPage() {
 
     return (
         <div className="flex min-h-screen items-center justify-center">
-            <LoaderIcon className="animate-spin text-black" />
+            <LoaderIcon className="text-muted-foreground animate-spin" />
         </div>
     );
 }

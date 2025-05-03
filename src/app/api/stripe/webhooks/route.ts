@@ -32,7 +32,7 @@ export async function POST(req: Request) {
 
     console.log("✅ Success:", event.id);
 
-    const permittedEvents: string[] = ["checkout.session.completed"];
+    const permittedEvents: string[] = ["checkout.session.completed", "account.updated"];
 
     const payload = await getPayload({ config });
 
@@ -78,6 +78,21 @@ export async function POST(req: Request) {
                             },
                         });
                     }
+                    break;
+                case "account.updated":
+                    data = event.data.object as Stripe.Account;
+
+                    await payload.update({
+                        collection: "tenants",
+                        where: {
+                            stripeAccountId: {
+                                equals: data.id,
+                            },
+                        },
+                        data: {
+                            stripeDetailsSubmitted: data.details_submitted,
+                        },
+                    });
                     break;
 
                 default:
