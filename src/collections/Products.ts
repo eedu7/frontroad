@@ -73,5 +73,14 @@ export const Products: CollectionConfig = {
                     " downloadable files, getting started guides, and bonus materials. Support Markdown formatting",
             },
         },
+        {
+            name: "isArchived",
+            label: "Archive",
+            defaultValue: false,
+            type: "checkbox",
+            admin: {
+                description: "If checked, this product will be archived.",
+            },
+        },
     ],
 };
