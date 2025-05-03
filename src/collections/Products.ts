@@ -65,7 +65,6 @@ export const Products: CollectionConfig = {
         },
         {
             name: "content",
-            // TODO: Change to RichText
             type: "richText",
             admin: {
                 description:
