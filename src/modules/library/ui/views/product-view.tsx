@@ -2,6 +2,7 @@
 
 import { ReviewSidebar } from "@/modules/library/ui/components/review-sidebar";
 import { useTRPC } from "@/trpc/client";
+import { RichText } from "@payloadcms/richtext-lexical/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { ArrowLeftIcon } from "lucide-react";
 import Link from "next/link";
@@ -46,7 +47,9 @@ export const ProductView = ({ productId }: ProductViewProps) => {
                     </div>
                     <div className="lg:col-span-5">
                         {data.content ? (
-                            <p className="text-muted-foreground font-medium italic">{data?.content}</p>
+                            <p className="text-muted-foreground font-medium italic">
+                                <RichText data={data.content} />
+                            </p>
                         ) : (
                             <p className="text-muted-foreground font-medium italic">No special content</p>
                         )}
