@@ -127,19 +127,44 @@ export const ReviewForm = ({ productId, initialData }: Props) => {
                         {initialData ? "Update review" : "Post review"}
                     </Button>
                 )}
-                {isPreview && (
-                    <Button
-                        type="button"
-                        variant="elevated"
-                        disabled={false}
-                        size="lg"
-                        onClick={() => setIsPreview(false)}
-                        className="w-fit"
-                    >
-                        Edit
-                    </Button>
-                )}
             </form>
+            {isPreview && (
+                <Button
+                    type="button"
+                    variant="elevated"
+                    disabled={false}
+                    size="lg"
+                    onClick={() => setIsPreview(false)}
+                    className="mt-4 w-fit"
+                >
+                    Edit
+                </Button>
+            )}
         </Form>
+    );
+};
+
+export const ReviewFormSkeleton = () => {
+    return (
+        <div className="flex flex-col gap-y-4">
+            <p className="font-medium">Liked it? Give it a rating</p>
+
+            <StarPicker disabled={true} />
+
+            <Textarea
+                placeholder="Want to leave a written review?"
+                disabled={true}
+            />
+
+            <Button
+                type="submit"
+                variant="elevated"
+                disabled={true}
+                size="lg"
+                className="hover:text-primary w-fit bg-black text-white hover:bg-pink-400"
+            >
+                Post review
+            </Button>
+        </div>
     );
 };

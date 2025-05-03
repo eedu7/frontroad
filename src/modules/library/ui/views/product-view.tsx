@@ -1,12 +1,13 @@
 "use client";
 
+import { ReviewFormSkeleton } from "@/modules/library/ui/components/review-form";
 import { ReviewSidebar } from "@/modules/library/ui/components/review-sidebar";
 import { useTRPC } from "@/trpc/client";
 import { RichText } from "@payloadcms/richtext-lexical/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { ArrowLeftIcon } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import React, { Suspense } from "react";
 
 interface ProductViewProps {
     productId: string;
@@ -42,7 +43,9 @@ export const ProductView = ({ productId }: ProductViewProps) => {
                 <div className="grid grid-cols-1 gap-4 lg:grid-cols-7 lg:gap-16">
                     <div className="lg:col-span-2">
                         <div className="gap-4 rounded-md border bg-white p-4">
-                            <ReviewSidebar productId={productId} />
+                            <Suspense fallback={<ReviewFormSkeleton />}>
+                                <ReviewSidebar productId={productId} />
+                            </Suspense>
                         </div>
                     </div>
                     <div className="lg:col-span-5">
@@ -56,6 +59,19 @@ export const ProductView = ({ productId }: ProductViewProps) => {
                     </div>
                 </div>
             </section>
+        </div>
+    );
+};
+
+export const ProductViewSkeleton = () => {
+    return (
+        <div className="min-h-screen bg-white">
+            <nav className="w-full border-b bg-[#F4F4F0] p-4">
+                <div className="flex items-center gap-2">
+                    <ArrowLeftIcon className="size-4" />
+                    <span className="text font-medium">Back to library</span>
+                </div>
+            </nav>
         </div>
     );
 };
