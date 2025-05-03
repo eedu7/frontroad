@@ -1,3 +1,4 @@
+import { PLATFORM_FEE_PERCENTAGE } from "@/constants";
 import { stripe } from "@/lib/stripe";
 import { CheckoutMetadata, ProductMetadata } from "@/modules/checkout/types";
 import { Media, Tenant } from "@/payload-types";
@@ -97,12 +98,19 @@ export const checkoutRouter = createTRPCRouter({
                 },
             });
 
-            const tenant = tenantsData.docs[0];
+            const tenant = tenantsData.docs[0] as Tenant;
 
             if (!tenant) {
                 throw new TRPCError({
                     code: "NOT_FOUND",
                     message: "Tenant not found",
+                });
+            }
+
+            if (!tenant.stripeDetailsSubmitted) {
+                throw new TRPCError({
+                    code: "BAD_REQUEST",
+                    message: "Tenant not allowed to sell products",
                 });
             }
 
@@ -125,19 +133,31 @@ export const checkoutRouter = createTRPCRouter({
                 },
             }));
 
-            const checkout = await stripe.checkout.sessions.create({
-                customer_email: ctx.session.user.email,
-                success_url: `${process.env.NEXT_PUBLIC_APP_URL}/tenants/${tenant.slug}/checkout?success=true`,
-                cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/tenants/${tenant.slug}/checkout?cancel=true`,
-                mode: "payment",
-                line_items: lineItems,
-                invoice_creation: {
-                    enabled: true,
+            const totolAmount = products.docs.reduce((acc, item) => acc + item.price * 100, 0);
+
+            const platformFeeAmount = Math.round(totolAmount * (PLATFORM_FEE_PERCENTAGE / 100));
+
+            const checkout = await stripe.checkout.sessions.create(
+                {
+                    customer_email: ctx.session.user.email,
+                    success_url: `${process.env.NEXT_PUBLIC_APP_URL}/tenants/${tenant.slug}/checkout?success=true`,
+                    cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/tenants/${tenant.slug}/checkout?cancel=true`,
+                    mode: "payment",
+                    line_items: lineItems,
+                    invoice_creation: {
+                        enabled: true,
+                    },
+                    metadata: {
+                        userId: ctx.session.user.id,
+                    } as CheckoutMetadata,
+                    payment_intent_data: {
+                        application_fee_amount: platformFeeAmount,
+                    },
                 },
-                metadata: {
-                    userId: ctx.session.user.id,
-                } as CheckoutMetadata,
-            });
+                {
+                    stripeAccount: tenant.stripeAccountId,
+                },
+            );
 
             if (!checkout.url) {
                 throw new TRPCError({
