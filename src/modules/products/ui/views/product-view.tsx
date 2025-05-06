@@ -27,8 +27,6 @@ const CartButton = dynamic(() => import("../components/cart-button").then((mod) 
     ),
 });
 
-// TODO: add real ratings
-
 type Props = {
     productId: string;
     tenantSlug: string;
