@@ -6,7 +6,15 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function generateTenantURL(tenantSlug: string) {
-    return `/tenants/${tenantSlug}`;
+    if (process.env.NODE_ENV === "development") {
+        return `/tenants/${tenantSlug}`;
+    } else {
+        const protocol = "https";
+        const domain = process.env.NEXT_PUBLIC_ROOT_DOMAIN;
+
+        // http://antonio.funroad.com
+        return `${protocol}://${tenantSlug}.${domain}`;
+    }
 }
 
 export function formatCurrency(value: string | number) {
