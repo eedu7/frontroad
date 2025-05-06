@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 export const config = {
     matcher: [
@@ -13,7 +13,7 @@ export const config = {
     ],
 };
 
-export default async function middleware(req: NextRequest) {
+export default async function middleware() {
     // const url = req.nextUrl;
     // // Extract the hostname (e.g "eedu7.frontroad.com")
     // const hostname = req.headers.get("host") || ";";
