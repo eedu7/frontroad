@@ -1,5 +1,6 @@
 import { PLATFORM_FEE_PERCENTAGE } from "@/constants";
 import { stripe } from "@/lib/stripe";
+import { generateTenantURL } from "@/lib/utils";
 import { CheckoutMetadata, ProductMetadata } from "@/modules/checkout/types";
 import { Media, Tenant } from "@/payload-types";
 import { baseProcedure, createTRPCRouter, protectedProcedure } from "@/trpc/init";
@@ -142,11 +143,13 @@ export const checkoutRouter = createTRPCRouter({
 
             const platformFeeAmount = Math.round(totolAmount * (PLATFORM_FEE_PERCENTAGE / 100));
 
+            const domain = generateTenantURL(input.tenantSlug);
+
             const checkout = await stripe.checkout.sessions.create(
                 {
                     customer_email: ctx.session.user.email,
-                    success_url: `${process.env.NEXT_PUBLIC_APP_URL}/tenants/${tenant.slug}/checkout?success=true`,
-                    cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/tenants/${tenant.slug}/checkout?cancel=true`,
+                    success_url: `${domain}/checkout?success=true`,
+                    cancel_url: `${domain}/checkout?cancel=true`,
                     mode: "payment",
                     line_items: lineItems,
                     invoice_creation: {
