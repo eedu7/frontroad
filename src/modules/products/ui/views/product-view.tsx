@@ -103,6 +103,8 @@ export const ProductView = ({ productId, tenantSlug }: Props) => {
                         </div>
                         <div className="p-6">
                             {data.description ? (
+                                // TODO: Rich text is only rendering basic, like bold and italic
+                                // configure plugin to render list as well
                                 <RichText data={data.description} />
                             ) : (
                                 <p className="text-muted-foreground font-medium italic">No description provided</p>

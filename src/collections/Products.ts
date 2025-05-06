@@ -13,7 +13,13 @@ export const Products: CollectionConfig = {
 
             return Boolean(tenant?.stripeDetailsSubmitted);
         },
-        update: ({ req }) => isSuperAdmin(req.user),
+        update: ({ req }) => {
+            if (isSuperAdmin(req.user)) return true;
+
+            const tenant = req.user?.tenants?.[0]?.tenant as Tenant;
+
+            return Boolean(tenant?.stripeDetailsSubmitted);
+        },
         delete: ({ req }) => isSuperAdmin(req.user),
     },
     admin: {
@@ -28,7 +34,6 @@ export const Products: CollectionConfig = {
         },
         {
             name: "description",
-            // TODO: Change to RichText
             type: "richText",
         },
         {
