@@ -11,7 +11,7 @@ export function generateTenantURL(tenantSlug: string) {
 
     // In development or subdomain disalbe mode, use normal routing
     if (isDevelopment || !isSubdomainRoutingEnabled) {
-        return `${process.env.NEXT_APP_PUBLIC_URL}/tenants/${tenantSlug}`;
+        return `${process.env.NEXT_PUBLIC_APP_URL}/tenants/${tenantSlug}`;
     } else {
         const protocol = "https";
         const domain = process.env.NEXT_PUBLIC_ROOT_DOMAIN;
