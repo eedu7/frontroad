@@ -19,7 +19,7 @@ interface CheckoutViewProps {
 export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
     const router = useRouter();
     const [states, setStates] = useCheckoutStates();
-    const { productIds, clearAllCarts, removeProduct, clearCart } = useCart(tenantSlug);
+    const { productIds, removeProduct, clearCart } = useCart(tenantSlug);
 
     const trpc = useTRPC();
     const queryClient = useQueryClient();
@@ -40,7 +40,7 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
             onSuccess: (data) => {
                 window.location.href = data.url;
             },
-            onError: (error: any) => {
+            onError: (error) => {
                 if (error.data?.code === "UNAUTHORIZED") {
                     // TODO: Modify when subdomain enables
 
@@ -61,7 +61,7 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
             queryClient.invalidateQueries(trpc.library.getMany.infiniteQueryFilter());
             router.push("/library");
         }
-    }, [states.success, clearCart, router]);
+    }, [states.success, clearCart, router, queryClient, setStates, trpc.library.getMany]);
 
     React.useEffect(() => {
         if (error?.data?.code === "NOT_FOUND") {
