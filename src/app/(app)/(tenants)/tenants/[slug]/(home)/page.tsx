@@ -10,6 +10,9 @@ interface Props {
     searchParams: Promise<SearchParams>;
     params: Promise<{ slug: string }>;
 }
+
+export const dynamic = "force-dynamic";
+
 export default async function TenantPage({ searchParams, params }: Props) {
     const { slug } = await params;
 
