@@ -15,7 +15,7 @@ export const StarPicker = ({ value = 0, onChange, disabled, className }: Props) 
     const [hoverValue, setHoverValue] = React.useState(0);
 
     return (
-        <div className={cn("flex items-center", disabled && "cursor-not-allowed opacity-50")}>
+        <div className={cn("flex items-center", disabled && "cursor-not-allowed opacity-50", className)}>
             {[1, 2, 3, 4, 5].map((star) => (
                 <button
                     key={star}
