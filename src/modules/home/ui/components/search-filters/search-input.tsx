@@ -1,9 +1,6 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CategoriesSidebar } from "@/modules/home/ui/components/search-filters/categories-sidebar";
-import { useProductFilters } from "@/modules/products/hooks/use-product-filters";
 import { useTRPC } from "@/trpc/client";
 import { useQuery } from "@tanstack/react-query";
 import { BookmarkCheckIcon, ListFilterIcon, SearchIcon } from "lucide-react";
@@ -12,22 +9,23 @@ import Link from "next/link";
 import React from "react";
 
 interface Props {
+    defaultValue?: string;
+    onChange?: (value: string) => void;
+
     disabled?: boolean;
 }
 
-export const SearchInput = ({ disabled }: Props) => {
-    const [filters, setFilters] = useProductFilters();
-    const [searchValue, setSearchValue] = React.useState(filters.search);
+export const SearchInput = ({ disabled, defaultValue, onChange }: Props) => {
+    const [searchValue, setSearchValue] = React.useState(defaultValue || "");
     const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
 
     const trpc = useTRPC();
     const session = useQuery(trpc.auth.session.queryOptions());
 
     React.useEffect(() => {
-        const timeoutId = setTimeout(() => setFilters({ search: searchValue }), 5000);
-
+        const timeoutId = setTimeout(() => onChange?.(searchValue), 5000);
         return () => clearTimeout(timeoutId);
-    }, [searchValue, setFilters]);
+    }, [searchValue, onChange]);
 
     return (
         <div className="flex w-full items-center gap-2">
