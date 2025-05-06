@@ -43,6 +43,3 @@ next-env.d.ts
 
 # Webstorm
 .idea/
-
-# Stripe
-stripe/
