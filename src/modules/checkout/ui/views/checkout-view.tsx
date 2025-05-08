@@ -38,6 +38,7 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
                 });
             },
             onSuccess: (data) => {
+                console.log(JSON.stringify(data));
                 window.location.href = data.url;
             },
             onError: (error) => {
@@ -54,9 +55,10 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
     React.useEffect(() => {
         if (states.success) {
             setStates({
-                success: false,
-                cancel: true,
+                success: true,
+                cancel: false,
             });
+            console.log("Success");
             clearCart();
             queryClient.invalidateQueries(trpc.library.getMany.infiniteQueryFilter());
             router.push("/library");

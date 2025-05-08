@@ -174,6 +174,29 @@ export const checkoutRouter = createTRPCRouter({
                 });
             }
 
+            const singleProduct = products.docs[0];
+
+            if (!singleProduct) {
+                throw new TRPCError({
+                    code: "INTERNAL_SERVER_ERROR",
+                    message: "Failed to create checkout session",
+                });
+            }
+
+            // Create an order for each product in the checkout
+            for (const product of products.docs) {
+                await ctx.db.create({
+                    collection: "orders",
+                    data: {
+                        name: product.name,
+                        user: ctx.session.user.id,
+                        product: product.id,
+                        stripeCheckoutSessionId: checkout.id,
+                        stripeAccountId: tenant.stripeAccountId,
+                    },
+                });
+            }
+
             return { url: checkout.url };
         }),
     getProducts: baseProcedure
